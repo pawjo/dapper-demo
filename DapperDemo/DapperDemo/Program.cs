@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -16,8 +17,12 @@ namespace DapperDemo
 
         static async Task Main(string[] args)
         {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
             await CountFunction();
-            Console.WriteLine("Success");
+            stopwatch.Stop();
+            Console.WriteLine($"Success after {stopwatch.ElapsedMilliseconds}ms");
         }
 
         private static async Task InsertBook()
