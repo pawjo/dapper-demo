@@ -20,7 +20,7 @@ namespace DapperDemo
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            await CountFunction();
+            await GetBooksWithAuthorsView();
             stopwatch.Stop();
             Console.WriteLine($"Success after {stopwatch.ElapsedMilliseconds}ms");
         }
@@ -105,6 +105,44 @@ namespace DapperDemo
                 var parameter = new { AuthorId = 1 };
                 int result = await connection.ExecuteScalarAsync<int>(sql, parameter);
                 Console.WriteLine($"Count: {result}");
+            }
+        }
+
+        private static async Task InsertStoredProcedure()
+        {
+            var newAuthor = new Author
+            {
+                Id = 5,
+                FirstName = "Stephen",
+                LastName = "King",
+                Nationality = "USA"
+            };
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string sql = "dbo.sp_InsertNewAuthor";
+                int rowAffected = await connection.ExecuteAsync(sql, newAuthor, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        private static async Task GetBooksWithAuthorsView()
+        {
+            List<object> list;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT * FROM dbo.BooksWithAuthorNames";
+                var result = await connection.QueryAsync<dynamic>(sql);
+                list = result.ToList();
+            }
+
+            //Console.WriteLine("BookName\tAuthorId\tDescription");
+            //foreach (var book in books)
+            //{
+            //    Console.WriteLine($"{book.Name}\t{book.AuthorId}\t{book.Description}");
+            //}
+            Console.WriteLine("Result:");
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.ToString().Trim());
             }
         }
     }
