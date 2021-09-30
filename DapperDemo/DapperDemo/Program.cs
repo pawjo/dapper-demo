@@ -116,18 +116,6 @@ namespace DapperDemo
             }
 
             return Tuple.Create(stopwatch.ElapsedMilliseconds, $"Rows affected: {rowsAffected}");
-
-            //var category = new Category
-            //{
-            //    Id = 3,
-            //    Name = "kryminał"
-            //};
-
-            //using (var connection = new SqlConnection(_connectionString))
-            //{
-            //    string sql = "INSERT INTO Categories (Id, Name) Values (@Id, @Name)";
-            //    int rowsAffected = await connection.ExecuteAsync(sql, category);
-            //}
         }
 
         private static async Task<Tuple<long, string>> Update(string name)
