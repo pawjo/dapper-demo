@@ -330,10 +330,14 @@ namespace DapperDemo
 
         private static string PrepareSelectBooksOutput(List<Book> books)
         {
-            string output = "BookName\tAuthorId\tDescription";
+            int maxLength = books.Max(x => x.Name.Length);
+            int tabCount = maxLength / 9;
+            string specialTab = new string('\t', tabCount);
+
+            string output = $"BookName{specialTab}AuthorId\tDescription";
             foreach (var book in books)
             {
-                output += $"\n{book.Name}\t{book.AuthorId}\t{book.Description}";
+                output += $"\n{book.Name}{book.AuthorId}\t\t{book.Description}";
             }
 
             return output;
