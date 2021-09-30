@@ -21,13 +21,13 @@ namespace DapperDemo
             Console.WriteLine("1 - examples");
             Console.WriteLine("2 - SQL injection");
 
-            ConsoleKey input = Console.ReadKey().Key;
+            string input = Console.ReadLine();
 
             Console.Clear();
 
             switch (input)
             {
-                case ConsoleKey.D1:
+                case "1":
                     {
                         PrintResult("Select example", await GetBooks());
 
@@ -46,12 +46,10 @@ namespace DapperDemo
 
                         PrintResult("Get books from view", await GetBooksWithAuthorsView());
 
-                        PrintResult("Vulnerable select", await VulnerableSelect("1"));
-
                         break;
                     }
 
-                case ConsoleKey.D2:
+                case "2":
                     {
                         Console.WriteLine("Input author id for search books: ");
                         string id = Console.ReadLine();
